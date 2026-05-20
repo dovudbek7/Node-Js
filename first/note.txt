@@ -1,0 +1,22 @@
+npm i monoose // for use with mongo db
+
+npm init --yes
+
+npm view mongoose dependecies 
+
+npm view mongoose versions
+
+npm view mongoose
+
+npm outdated
+
+
+npm i jshint --save-dev // save only development not in production
+
+npm uninstall => npm un {package name}// shorthand 
+
+sudo npm i -g //for globally install
+
+npm adduser || npm login
+
+npm publishing // for publish packages that you own 
