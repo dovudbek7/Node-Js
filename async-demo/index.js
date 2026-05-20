@@ -1,26 +1,26 @@
 // Asynchronous
 console.log("Before");
-getUser(1, function (user) {
-  console.log("User", user);
+getUser(1, getRepo);
 
-  getRepo("Username", (repo) => {
-    console.log("Repo: " + repo);
+function getRepo(user) {
+  getRepo("Username", getCommits);
+}
+function getCommits(repos) {
+  getCommits(repo, displayCommits);
+}
+function displayCommits(commits) {
+  console.log(commits);
+}
 
-    getCommits(repo, (commits) => {
-      // Calback Hell
-    })
-  });
-});
 // console.log(user);
 console.log("After");
 
 // Synchronous
-console.log("Before");
-const user = getUser(1);
-const repo = getRepo(user.gitHubUsername);
-const commits = getCommits(repos[0]);
-console.log("After");
-
+// console.log("Before");
+// const user = getUser(1);
+// const repo = getRepo(user.gitHubUsername);
+// const commits = getCommits(repos[0]);
+// console.log("After");
 
 function getUser(id, callback) {
   setTimeout(() => {
