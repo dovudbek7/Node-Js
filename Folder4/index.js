@@ -12,6 +12,9 @@ const morgan = require("morgan");
 const courses = require("./routes/courses");
 const home = require("./routes/home");
 
+app.set("view engine", 'pug')
+app.set('views', './views') // default
+
 // console.log(`NODE_ENV ${process.evn}`);
 // console.log(`app ${app.get("env")}`);
 
