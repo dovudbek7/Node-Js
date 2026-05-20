@@ -1,56 +1,34 @@
+const startupDebugger = require("debug")("app:startup"); // second is function
+const dbDebugger = require("debug")("app:db");
 const express = require("express");
+const config = require("config");
 const app = express();
 const Joi = require("joi");
+const { log, auth } = require("./middleware/logger");
 app.use(express.json());
+const helmet = require("helmet");
+const morgan = require("morgan");
 
-const courses = [
-  { id: 1, name: "course1" },
-  { id: 2, name: "course2" },
-  { id: 3, name: "course3" },
-];
+const courses = require("./routes/courses");
+const home = require("./routes/home");
 
-app.get("/", (req, res) => {
-  res.send("Hellow world");
-});
+// console.log(`NODE_ENV ${process.evn}`);
+// console.log(`app ${app.get("env")}`);
 
-app.get("/api/courses", (req, res) => {
-  res.send(courses);
-});
+console.log("Application Name: " + config.get("name"));
+console.log("Mail Server: " + config.get("mail.host"));
+console.log("Mail Password: " + config.get("mail.password"));
 
-app.get("/api/courses/:id", (req, res) => {
-  const course = courses.find((c) => c.id === parseInt(req.params.id));
+app.use(log);
+app.use(auth);
+app.use(helmet());
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  startupDebugger("Morgan enabled...");
+}
 
-  if (!course) res.status(404).send("Unavailable course");
-  res.send(course);
-});
-app.get("/api/courses/:id", (req, res) => {
-  res.send(req.query);
-});
-
-app.post("/api/courses", (req, res) => {
-  const schema = Joi.object({
-    name: Joi.string().required().min(3),
-  });
-  const result = schema.validate(req.body);
-  console.log(result);
-
-  if (result.error) {
-    res.status(400).send(result.error);
-    return;
-  }
-
-  //   if (!req.body.name || req.body.name.length < 3) {
-  //     res.status(400).send("Name is required");
-  //     return;
-  //   }
-  const course = {
-    id: courses.length + 1,
-    name: req.body.name,
-  };
-  courses.push(course);
-  res.send(course);
-});
-
+app.use("/api/courses", courses);
+app.use("/", home);
 const port = 3000;
 // const port = process.env.PORT || 3000;
 
