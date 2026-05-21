@@ -76,19 +76,26 @@ async function updateCourse(_id) {
 }
 
 async function updateFirst(id) {
-    const result = await Course.findByIdAndUpdate(
-      id,
-      {
-        $set: {
-          author: "Another Author",
-          isPublished: true,
-        },
+  const result = await Course.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        author: "Another Author",
+        isPublished: true,
       },
-      { new: true }, // for get the data is updated without this it will return the real data that was before update
-    );
-//   const course = await Course.findOne({ _id: "5a68fdf95db93f6477053ddd" });
-//   console.log(course);
-    console.log(result);
+    },
+    { new: true }, // for get the data is updated without this it will return the real data that was before update
+  );
+  //   const course = await Course.findOne({ _id: "5a68fdf95db93f6477053ddd" });
+  //   console.log(course);
+  console.log(result);
 }
 // updateFirst("5a68fdf95db93f6477053ddd");
-updateCourse("5a68fdc3615eda645bc6bdec");
+// updateCourse("5a68fdc3615eda645bc6bdec");
+
+async function deleteCourse(id) {
+  const result = await Course.deleteOne({ _id: id }); // return { acknowledged: true, deletedCount: 0 }
+  //   const course = await Course.findByIdAndDelete(id); // return the deleted data or if there is not match id returns null
+  console.log(result);
+}
+deleteCourse("5a68ff090c553064a218a547");
