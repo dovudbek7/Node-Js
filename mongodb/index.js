@@ -19,7 +19,7 @@ async function createCourse() {
   const course = new Course({
     name: "React Js",
     author: "Mosh",
-    tags: ["react", "js", 'ts'],
+    tags: ["react", "js", "ts"],
     isPublished: true,
   });
 
@@ -27,4 +27,11 @@ async function createCourse() {
   console.log(result);
 }
 
-createCourse()
+async function getCourse() {
+  const courses = await Course.find({ author: "Mosh" })
+    .limit(10)
+    .sort({ name: 1 })
+    .select({ name: 1, tags: 1 });
+  console.log(courses);
+}
+getCourse();
