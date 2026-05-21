@@ -17,10 +17,20 @@ async function getCourses() {
   return await Course
     // .find({ isPublished: true, tags: "backend" })
     // .find({ price: { $gte: 10, $lte: 15 } })
-    .find()
+    // .find()
     // .or([{ author: "Mosh" }, { isPublished: true }])
-    .and([{ author: "Mosh" }, { isPublished: true }])
+    // .and([{ author: "Mosh" }, { isPublished: true }])
     // .find({ price: { $in: [10, 20, 30] } })
+
+    // Starts with Mosh
+    .find({ author: /^Mosh/ })
+
+    // Ends with Hamedani
+    .find({ author: /Hamedani$/i })
+
+    // Contains Mosh
+    .find({ author: /.*Mosh.*/i })
+
     .sort({ name: 1 })
     .select({ name: 1, author: 1, price: 1 });
 }
