@@ -45,7 +45,7 @@ async function run() {
   console.log(courses);
 }
 
-run();
+// run();
 
 `
 eq: (equal)
@@ -57,3 +57,22 @@ lte: (less than or equal)
 in
 nin: (not in)
 `;
+
+async function updateCourse(_id) {
+  const course = await Course.findById(_id);
+  if (!course) return console.log("not found");
+
+  course.isPublished = true;
+  course.author = "Another Author"; // first way
+
+  //   course.set({
+  //     author: "Another Author",
+  //     isPublished: true,
+    //   }); // second way ( both of them identical )
+    
+
+  const result = await course.save();
+  console.log(result);
+}
+
+updateCourse("5a68fdc3615eda645bc6bdec");
