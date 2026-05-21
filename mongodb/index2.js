@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/mongo-exercises");
 
 const courseSchema = new mongoose.Schema({
+  _id: String,
   name: String,
   author: String,
   tags: [String],
@@ -68,11 +69,26 @@ async function updateCourse(_id) {
   //   course.set({
   //     author: "Another Author",
   //     isPublished: true,
-    //   }); // second way ( both of them identical )
-    
+  //   }); // second way ( both of them identical )
 
   const result = await course.save();
   console.log(result);
 }
 
+async function updateFirst(id) {
+    const result = await Course.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          author: "Another Author",
+          isPublished: true,
+        },
+      },
+      { new: true }, // for get the data is updated without this it will return the real data that was before update
+    );
+//   const course = await Course.findOne({ _id: "5a68fdf95db93f6477053ddd" });
+//   console.log(course);
+    console.log(result);
+}
+// updateFirst("5a68fdf95db93f6477053ddd");
 updateCourse("5a68fdc3615eda645bc6bdec");
