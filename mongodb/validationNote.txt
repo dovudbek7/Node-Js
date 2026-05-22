@@ -9,3 +9,17 @@ built in validators: {
     //numbers min,max
     // string minlength,maxlength
 }
+
+
+
+
+Costum validators
+tags: {
+    type: Array,
+    validate: {
+      validator: function (v) {
+        return v && v.length > 0
+      },
+      message: "A Course should have at least one tag"
+    }
+  },
