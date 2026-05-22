@@ -1,0 +1,4 @@
+by all properties will be optional while saving to mongo db
+
+name: { type: String, required: true }, // for make properties requireed
+After making our properties required we must add save function inside try and catch block
