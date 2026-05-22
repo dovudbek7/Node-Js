@@ -20,10 +20,14 @@ const courseSchema = new mongoose.Schema({
     type: Array,
     validate: {
       validator: function (v) {
-        return v && v.length > 0
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(v && v.length > 0);
+          }, 1000);
+        });
       },
-      message: "A Course should have at least one tag"
-    }
+      message: "A Course should have at least one tag",
+    },
   },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
@@ -43,7 +47,8 @@ async function createCourse() {
   const course = new Course({
     name: "React Js",
     author: "Mosh",
-    tags: ["react", "js", "ts"],
+    category: "network",
+    // tags: ["react", "js", "ts"],
     isPublished: true,
     price: 12,
   });

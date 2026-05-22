@@ -23,3 +23,13 @@ tags: {
       message: "A Course should have at least one tag"
     }
   },
+
+
+some time we need read data from database or somewhere and at that time we need async validators
+validator: function (v) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(v && v.length > 0);
+          }, 1000);
+        });
+      },
