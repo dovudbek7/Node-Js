@@ -47,7 +47,7 @@ async function createCourse() {
   const course = new Course({
     name: "React Js",
     author: "Mosh",
-    category: "network",
+    category: "",
     // tags: ["react", "js", "ts"],
     isPublished: true,
     price: 12,
@@ -58,7 +58,8 @@ async function createCourse() {
     const result = await course.save();
     console.log(result);
   } catch (err) {
-    console.log(err.message);
+    for(field in err.errors)
+      console.log(err.errors[field].message);
   }
 }
 

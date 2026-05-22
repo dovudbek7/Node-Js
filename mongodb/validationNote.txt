@@ -33,3 +33,11 @@ validator: function (v) {
           }, 1000);
         });
       },
+
+
+
+Validate Errors:
+catch (err) {
+    for(field in err.errors)
+      console.log(err.errors[field].message);
+  }
