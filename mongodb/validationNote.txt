@@ -41,3 +41,9 @@ catch (err) {
     for(field in err.errors)
       console.log(err.errors[field].message);
   }
+
+
+schema type options
+lowercase: true,
+uppercase: true
+trim: true,

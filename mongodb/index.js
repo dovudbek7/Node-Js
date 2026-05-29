@@ -14,6 +14,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ["web", "mobile", "network"],
+    lowercase: true,
+    // uppercase: true
+    trim: true,
   },
   author: String,
   tags: {
@@ -48,7 +51,7 @@ async function createCourse() {
     name: "React Js",
     author: "Mosh",
     category: "",
-    // tags: ["react", "js", "ts"],
+    tags: ["react", "js", "ts"],
     isPublished: true,
     price: 12,
   });
@@ -58,8 +61,7 @@ async function createCourse() {
     const result = await course.save();
     console.log(result);
   } catch (err) {
-    for(field in err.errors)
-      console.log(err.errors[field].message);
+    for (field in err.errors) console.log(err.errors[field].message);
   }
 }
 
