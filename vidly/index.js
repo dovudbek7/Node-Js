@@ -23,9 +23,12 @@ if (!config.get("jwtPrivateKey")) {
 winston.add(new winston.transports.File({ filename: "logfile.log" }));
 winston.add(new winston.transports.MongoDB({ db: "mongodb://localhost/vidly", level: "info" }));
 
-process.on('uncaughtException', (ex) => {
-  console.log('WE GOT AN UNCAUGHT EXCEPTION');
-  winston.error(ex.message, ex);
+winston.handleExceptions(
+  new winston.transports.File({ filename: "uncaughtExceptions.log" })
+);
+
+process.on('unhandledRejection', (ex) => {
+  throw ex;
 });
 
 mongoose
