@@ -1,0 +1,188 @@
+﻿1
+00:00:00,000 --> 00:00:04,000
+So back to our test file, 
+
+2
+00:00:04,000 --> 00:00:08,000
+let's duplicate this last test
+
+3
+00:00:08,000 --> 00:00:12,000
+and modify it accordingly. So we should return
+
+4
+00:00:12,000 --> 00:00:16,000
+404 if no rental 
+
+5
+00:00:16,000 --> 00:00:20,000
+found for the customer
+
+6
+00:00:20,000 --> 00:00:24,000
+movie combination. So, in this test, to
+
+7
+00:00:24,000 --> 00:00:28,000
+simulate this edge case, we're going to deal with the
+
+8
+00:00:28,000 --> 00:00:32,000
+earlier. So we can simply call rental.
+
+9
+00:00:32,000 --> 00:00:36,000
+remove pass an empty query object, 
+
+10
+00:00:36,000 --> 00:00:40,000
+clean up our rental collection. Now we execute our 
+
+11
+00:00:40,000 --> 00:00:44,000
+request, and then assert that we get 404. 
+
+12
+00:00:44,000 --> 00:00:48,000
+Save, back in the terminal, obviously we have 
+
+13
+00:00:48,000 --> 00:00:52,000
+a failing test and let's double check that, we expect that
+
+14
+00:00:52,000 --> 00:00:56,000
+to get 404, but we got 401, beautiful.
+
+15
+00:00:56,000 --> 00:01:00,000
+So back in the production code, what is the simplest code that
+
+16
+00:01:00,000 --> 00:01:04,000
+we can write to make this test pass. Well, we need to find a 
+
+17
+00:01:04,000 --> 00:01:08,000
+rental for this customer and movie. If that rental doesn't
+
+18
+00:01:08,000 --> 00:01:12,000
+exist, then we'll return a 404 error. So, 
+
+19
+00:01:12,000 --> 00:01:16,000
+here we need to load our rental class, so on the top, 
+
+20
+00:01:16,000 --> 00:01:20,000
+require, we go 1 level up, 
+
+21
+00:01:20,000 --> 00:01:24,000
+to the models folder, load the module folder, 
+
+22
+00:01:24,000 --> 00:01:28,000
+and then load the Rental class. 
+
+23
+00:01:28,000 --> 00:01:32,000
+Now here, we call Rental.find
+
+24
+00:01:32,000 --> 00:01:36,000
+One. We could also use find, but find returns 
+
+25
+00:01:36,000 --> 00:01:40,000
+an array. So then we'll have to look for the first element in an array. 
+
+26
+00:01:40,000 --> 00:01:44,000
+So it's cleaner to use findOne 
+
+27
+00:01:44,000 --> 00:01:48,000
+use a query object, now each rental has a 
+
+28
+00:01:48,000 --> 00:01:52,000
+customer property which is an embedded document. So, 
+
+29
+00:01:52,000 --> 00:01:56,000
+add a filter, we want to look for a rental with customer
+
+30
+00:01:56,000 --> 00:02:00,000
+with id equal to request
+
+31
+00:02:00,000 --> 00:02:04,000
+.body.customerId. 
+
+32
+00:02:04,000 --> 00:02:08,000
+Okay? So, we use the .notation to access the
+
+33
+00:02:08,000 --> 00:02:12,000
+property in a sub document. Now similarly we need
+
+34
+00:02:12,000 --> 00:02:16,000
+another property here. So movie.
+
+35
+00:02:16,000 --> 00:02:20,000
+_id should equal request.body.
+
+36
+00:02:20,000 --> 00:02:24,000
+movieId. So, we await this
+
+37
+00:02:24,000 --> 00:02:28,000
+promise, to get the rental, now, 
+
+38
+00:02:28,000 --> 00:02:32,000
+if it doesn't exist, we'll return
+
+39
+00:02:32,000 --> 00:02:36,000
+the response with status 404 with a message
+
+40
+00:02:36,000 --> 00:02:40,000
+like rental not found. 
+
+41
+00:02:40,000 --> 00:02:44,000
+Save, back in the terminal, all tests
+
+42
+00:02:44,000 --> 00:02:48,000
+are passing. Beautiful. Now here's your next exercise. 
+
+43
+00:02:48,000 --> 00:02:52,000
+I want you to write a test case and ensure that this endpoint returns 
+
+44
+00:02:52,000 --> 00:02:56,000
+a 400 error, if this rental is already 
+
+45
+00:02:56,000 --> 00:03:00,000
+processed. Which means, the return date is set. So 
+
+46
+00:03:00,000 --> 00:03:04,000
+go ahead and you'll see my solution next. 
+
+47
+00:03:04,000 --> 00:03:04,133
+
+
