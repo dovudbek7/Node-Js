@@ -13,6 +13,13 @@ describe('/api/returns', () => {
   let movie;
   let token;
 
+  const exec = () => {
+    return request(server)
+      .post('/api/returns')
+      .set('x-auth-token', token)
+      .send({ customerId, movieId });
+  };
+
   beforeEach(async () => {
     server = require('../../index');
 
@@ -48,5 +55,13 @@ describe('/api/returns', () => {
     await server.close();
     await Rental.remove({});
     await Movie.remove({});
+  });
+
+  it('should return 401 if client is not logged in', async () => {
+    token = '';
+
+    const res = await exec();
+
+    expect(res.status).toBe(401);
   });
 });

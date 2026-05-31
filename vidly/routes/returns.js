@@ -1,7 +1,8 @@
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
 });
 
 module.exports = router;
