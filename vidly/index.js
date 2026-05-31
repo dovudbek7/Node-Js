@@ -1,34 +1,12 @@
 require("express-async-errors");
 const winston = require("winston");
-require("winston-mongodb");
-const Joi = require("joi");
-Joi.objectId = require("joi-objectid")(Joi);
-const config = require("config");
-const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
-if (!config.get("jwtPrivateKey")) {
-  console.error("FATAL ERROR: jwtPrivateKey is not defined.");
-  process.exit(1);
-}
-
-winston.add(new winston.transports.File({ filename: "logfile.log" }));
-winston.add(new winston.transports.MongoDB({ db: "mongodb://localhost/vidly", level: "info" }));
-
-winston.handleExceptions(
-  new winston.transports.File({ filename: "uncaughtExceptions.log" })
-);
-
-process.on('unhandledRejection', (ex) => {
-  throw ex;
-});
-
-mongoose
-  .connect("mongodb://localhost/vidly")
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch((err) => console.error("Could not connect to MongoDB..."));
-
+require("./startup/logging")();
+require("./startup/config")();
+require("./startup/validation")();
+require("./startup/db")();
 require("./startup/routes")(app);
 
 const port = process.env.PORT || 3000;
