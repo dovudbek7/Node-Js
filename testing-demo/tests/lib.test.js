@@ -24,3 +24,27 @@ describe("greet", () => {
     expect(result).toContain("Mosh");
   });
 });
+
+describe("getCurrencies", () => {
+  it("should return supported currencies", () => {
+    const result = lib.getCurrencies();
+
+    // Too general (Haddan tashqari umumiy - tavsiya etilmaydi)
+    expect(result).toBeDefined();
+    expect(result).not.toBeNull();
+
+    // Too specific (Haddan tashqari qat'iy/aniq - indeks o'zgarsa test sinadi)
+    expect(result[0]).toBe("USD");
+    expect(result[1]).toBe("AUD");
+    expect(result[2]).toBe("EUR");
+    expect(result.length).toBe(3);
+
+    // Proper way (Yaxshi usul - massiv ichida borligini alohida tekshirish)
+    expect(result).toContain("USD");
+    expect(result).toContain("AUD");
+    expect(result).toContain("EUR");
+
+    // Ideal way (Eng mukammal/ideal usul - elementlar tartibidan qat'i nazar tekshiradi)
+    expect(result).toEqual(expect.arrayContaining(["EUR", "USD", "AUD"]));
+  });
+});
